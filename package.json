@@ -1,0 +1,17 @@
+{
+    "name": "babylonjs-editor-box2d-plugin",
+    "version": "1.0.0",
+    "description": "",
+    "main": "build/src/index.js",
+    "author": {
+        "name": "Julien Moreau-Mathis",
+        "url": "https://medium.com/@Luaacro"
+    },
+    "scripts": {
+        "watch": "tsc -p . --watch"
+    },
+    "devDependencies": {
+        "babylonjs-editor": "4.0.0-beta.9"
+    },
+    "dependencies": {}
+}
