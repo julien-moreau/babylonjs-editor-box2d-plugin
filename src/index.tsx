@@ -2,18 +2,25 @@ import * as React from "react";
 import { Editor, IPlugin } from "babylonjs-editor";
 
 import { Toolbar } from "./toolbar";
+import { ShapesManager } from "./shapes-manager";
+import { ShapesExporter } from "./shapes-exporter";
 
 /**
  * Registers the plugin by returning the IPlugin content.
  * @param editor defines the main reference to the editor.
  */
 export const registerEditorPlugin = (editor: Editor): IPlugin => {
+    const shapesManager = new ShapesManager(editor);
+
+    const shapesExporter = new ShapesExporter(editor, shapesManager);
+    shapesExporter.init();
+
     return {
         /**
          * Defines the list of all toolbar elements to add when the plugin has been loaded.
          */
         toolbar: [
-            { buttonLabel: "Sample Plugin", buttonIcon: "airplane", content: <Toolbar editor={editor} /> }
+            { buttonLabel: "Box 2D", buttonIcon: "box", content: <Toolbar editor={editor} shapesManager={shapesManager} /> }
         ],
 
         /**
@@ -24,7 +31,7 @@ export const registerEditorPlugin = (editor: Editor): IPlugin => {
          * saves the project.
          */
         getWorkspacePreferences: () => {
-            return { myProperty: "I'm preferences of the plugin" };
+            return { };
         },
 
         /**
@@ -34,6 +41,13 @@ export const registerEditorPlugin = (editor: Editor): IPlugin => {
          */
         setWorkspacePreferences: (preferences: any) => {
             console.log(preferences);
+        },
+
+        /**
+         * Called on the plugin is being disposed.
+         */
+        onDispose: () => {
+            shapesExporter.dispose();
         },
     };
 }
